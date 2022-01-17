@@ -49,6 +49,14 @@ public class QuestionController {
         return new ResponseEntity<>(service.updateQuestion(question), HttpStatus.CREATED);
     }
 
+    @DeleteMapping(path = "{id}")
+    public ResponseEntity<?> deleteQuestion(@PathVariable int id) {
+        if (service.deleteQuestion(id)) {
+            return new ResponseEntity<>("deleted question successfully", HttpStatus.OK);
+        }
+        return  new ResponseEntity<>("id not found", HttpStatus.BAD_REQUEST);
+    }
+
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

@@ -29,9 +29,10 @@ public class QuestionService {
 
     public boolean deleteQuestion(int id) {
         if (getQuestionById(id) != null) {
-            questionsRepo.deleteById(id);
-
-            return true;
+            if (!getQuestionById(id).isAnswered()) {
+                questionsRepo.deleteById(id);
+                return true;
+            }
         }
         return false;
     }

@@ -34,21 +34,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/api/user/**",
                         "/api/login",
-                        "/api/token/refresh",
-                        "/api/tax/**",
-                        "/api/sales/**",
-                        "/api/question/**",
-                        "/api/option/**",
-                        "/api/AQ/**"
+                        "/api/token/refresh"
+//                        "/api/question/**",
+//                        "/api/option/**",
+//                        "/api/AQ/**"
                 ).permitAll()
                 .antMatchers(HttpMethod.GET,
-                        "/api/product/**").hasAnyRole("USER", "MANAGER", "OFFICER")
-                .antMatchers(HttpMethod.POST, "/api/bill").hasAnyRole("USER","MANAGER","OFFICER")
+                        "/api/question/**").hasAnyRole("USER", "OFFICER")
+                .antMatchers(HttpMethod.POST, "/api/AQ/**").hasRole("USER")
                 .antMatchers(
-                        "/api/product/**"
-                ).hasAnyRole("MANAGER", "OFFICER")
-                .antMatchers( "/api/bill/**" ).hasRole("OFFICER")
-                .antMatchers(HttpMethod.POST,"/manage/*").hasRole("OFFICER")
+                        "/api/question/**",
+                        "/api/option/**",
+                        "/api/AQ/**").hasRole("OFFICER")
                 .anyRequest().authenticated();
         http.addFilter(authenticationFilter);
         http.addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
